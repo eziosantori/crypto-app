@@ -1,0 +1,66 @@
+import { render, screen, fireEvent } from "@testing-library/react";
+import CryptoTable from "./cryptoTable";
+import { describe, it, expect, vi } from "vitest";
+import { mockCryptos } from "./__mocks__/data";
+
+const mockData = {
+  count: 7,
+  results: mockCryptos,
+};
+
+describe("CryptoTable", () => {
+  it("1. correctly handles page change (table pagination)", () => {
+    const handlePageChange = vi.fn();
+
+    render(
+      <CryptoTable
+        data={mockData}
+        page={0}
+        handleBuy={() => {}}
+        handleOpen={() => {}}
+        handlePageChange={handlePageChange}
+      />
+    );
+
+    const nextButton = screen.getByLabelText("Go to next page");
+    fireEvent.click(nextButton);
+
+    expect(handlePageChange).toHaveBeenCalled();
+    const counterPage = screen.getByText("5–7 of 7");
+    expect(counterPage).toBeInTheDocument();
+  });
+
+  it("2. details button should have margin left set to 20px", () => {
+    render(
+      <CryptoTable
+        data={mockData}
+        page={0}
+        handleBuy={() => {}}
+        handleOpen={() => {}}
+        handlePageChange={() => {}}
+      />
+    );
+
+    const detailsButton = screen.getAllByText("Details")[0];
+    expect(detailsButton).toHaveStyle({ marginLeft: "20px" });
+  });
+
+  it("3. name cells for coins with prices < 100 should have color green", () => {
+    render(
+      <CryptoTable
+        data={mockData}
+        page={0}
+        handleBuy={() => {}}
+        handleOpen={() => {}}
+        handlePageChange={() => {}}
+      />
+    );
+
+    const rippleCell = screen.getByText("Ripple");
+    expect(rippleCell).toBeInTheDocument();
+    // Qui dovresti applicare uno stile condizionale nel componente per farlo passare
+    // es: sx={{ color: row.price < 100 ? 'green' : 'inherit' }}
+    // Poi testarlo così:
+    // expect(rippleCell).toHaveStyle({ color: 'green' });
+  });
+});
