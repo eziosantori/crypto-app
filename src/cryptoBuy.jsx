@@ -64,7 +64,7 @@ export default function CryptoBuy() {
   };
 
   const handleClose = (currency) => {
-    fakeAsyncRejectAfter(API_URL_CLOSE_EVENT + currency.id)
+    fakeAsyncRejectAfter(50)
       .then(() => {
         setOpenedCurrency(null);
         setOpen(false);
@@ -72,6 +72,7 @@ export default function CryptoBuy() {
       })
       .catch(() => {
         setOpen(false);
+        setCloseError(true);
       });
     // axios
     //   .post(API_URL_CLOSE_EVENT + currency.id)
