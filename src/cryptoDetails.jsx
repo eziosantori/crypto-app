@@ -17,12 +17,6 @@ export const API_URL_DETAILS = "https://example.com/api/cryptos?id=";
 export default function CryptoDetails({ open, handleClose, currency }) {
   const [response, setResponse] = React.useState();
 
-  React.useEffect(() => {
-    if (currency?.id) {
-      getData();
-    }
-  }, []);
-
   const getData = async () => {
     setTimeout(() => {
       const data = mockCryptos.find((crypto) => crypto.id === currency.id);
@@ -31,6 +25,12 @@ export default function CryptoDetails({ open, handleClose, currency }) {
     // const response = await axios.get(API_URL_DETAILS + currency.id);
     // setResponse(response.data);
   };
+
+  React.useEffect(() => {
+    if (currency?.id) {
+      getData();
+    }
+  }, [currency?.id, getData]);
 
   return (
     <Dialog open={open} maxWidth="sm">
