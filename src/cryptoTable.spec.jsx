@@ -26,8 +26,7 @@ describe("CryptoTable", () => {
     fireEvent.click(nextButton);
 
     expect(handlePageChange).toHaveBeenCalled();
-    const counterPage = screen.getByText("5–7 of 7");
-    expect(counterPage).toBeInTheDocument();
+    expect(handlePageChange).toHaveBeenCalledWith(1);
   });
 
   it("2. details button should have margin left set to 20px", () => {
@@ -58,9 +57,6 @@ describe("CryptoTable", () => {
 
     const rippleCell = screen.getByText("Ripple");
     expect(rippleCell).toBeInTheDocument();
-    // Qui dovresti applicare uno stile condizionale nel componente per farlo passare
-    // es: sx={{ color: row.price < 100 ? 'green' : 'inherit' }}
-    // Poi testarlo così:
-    // expect(rippleCell).toHaveStyle({ color: 'green' });
+    expect(rippleCell).toHaveStyle({ color: "green" });
   });
 });

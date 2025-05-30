@@ -8,8 +8,8 @@ import {
   TableFooter,
   TablePagination,
   Button,
-} from '@mui/material';
-import React from 'react';
+} from "@mui/material";
+import React from "react";
 
 // Do not change the way the components and variables are exported and imported
 
@@ -20,6 +20,9 @@ export default function CryptoTable({
   handleOpen,
   handlePageChange,
 }) {
+  const onPageChange = (e, newPage) => {
+    handlePageChange?.(newPage);
+  };
   return (
     <>
       <TableContainer>
@@ -33,12 +36,16 @@ export default function CryptoTable({
           </TableHead>
           <TableBody>
             {data &&
-              data.results.map(row => (
+              data.results.map((row) => (
                 <TableRow
                   key={row.name}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  <TableCell component="th" scope="row">
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    style={{ color: row.price < 100 ? "green" : "inherit" }}
+                  >
                     {row.name}
                   </TableCell>
                   <TableCell align="left">{row.price}</TableCell>
@@ -53,7 +60,7 @@ export default function CryptoTable({
                     <Button
                       variant="outlined"
                       size="small"
-                      style={{ marginleft: '20px' }}
+                      style={{ marginLeft: "20px" }}
                       onClick={handleOpen}
                     >
                       Details
@@ -71,7 +78,7 @@ export default function CryptoTable({
                   rowsPerPage={4}
                   rowsPerPageOptions={[4]}
                   page={page}
-                  onPageChange={handlePageChange}
+                  onPageChange={onPageChange}
                 />
               )}
             </TableRow>
