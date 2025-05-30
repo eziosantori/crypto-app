@@ -5,11 +5,12 @@ import {
   DialogContentText,
   DialogActions,
   Button,
-} from '@mui/material';
-import React from 'react';
-import axios from 'axios';
+} from "@mui/material";
+import React from "react";
+import axios from "axios";
+import { mockCryptos } from "./__mocks__/data";
 
-export const API_URL_DETAILS = 'https://example.com/api/cryptos?id=';
+export const API_URL_DETAILS = "https://example.com/api/cryptos?id=";
 
 // Do not change the way the components and variables are exported and imported
 
@@ -23,15 +24,19 @@ export default function CryptoDetails({ open, handleClose, currency }) {
   }, []);
 
   const getData = async () => {
-    const response = await axios.get(API_URL_DETAILS + currency.id);
-    setResponse(response.data);
+    setTimeout(() => {
+      const data = mockCryptos.find((crypto) => crypto.id === currency.id);
+      setResponse(data);
+    }, 500);
+    // const response = await axios.get(API_URL_DETAILS + currency.id);
+    // setResponse(response.data);
   };
 
   return (
     <Dialog open={open} maxWidth="sm">
       <DialogTitle>{currency?.name}</DialogTitle>
       <DialogContent>
-        <DialogContentText>response?.description</DialogContentText>
+        <DialogContentText>{response?.description}</DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} autoFocus>
