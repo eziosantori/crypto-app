@@ -57,6 +57,23 @@ describe("CryptoTable", () => {
 
     const rippleCell = screen.getByText("Ripple");
     expect(rippleCell).toBeInTheDocument();
-    expect(rippleCell).toHaveStyle({ color: "green" });
+    expect(rippleCell).toHaveStyle({ color: "rgb(0, 128, 0)" });
+  });
+
+  it("4. correctly opne modal passign the currency", () => {
+    const handleOpen = vi.fn();
+    render(
+      <CryptoTable
+        data={mockData}
+        page={0}
+        handleBuy={() => {}}
+        handleOpen={handleOpen}
+        handlePageChange={() => {}}
+      />
+    );
+
+    const detailsButton = screen.getAllByText("Details")[0];
+    fireEvent.click(detailsButton);
+    expect(handleOpen).toHaveBeenCalledWith(mockCryptos[0]);
   });
 });
